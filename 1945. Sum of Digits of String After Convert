@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int getLucky(string s, int k) {
+
+        // Develope alphabet -> int mapping
+        unordered_map<char, int> alphaHash;
+        alphabetMapping(alphaHash);
+
+        string integerString;
+        for (char c: s) {
+            // get value associated with character stored in alphaHash and add to string
+            integerString.append(std::to_string(alphaHash.at(c)));
+        }
+
+        // perform the transform operation k times
+        string transformedString = integerString;
+        int transformTotal = 0;
+        for (int i=0; i<k; i++) {
+            if (1 == transformedString.length()) {
+                break;
+            } else {
+                transformTotal = 0;
+                for (char c: transformedString) {
+                    transformTotal += c-'0';
+                }
+                transformedString = std::to_string(transformTotal);
+            }
+        }
+        
+        return transformTotal;
+    }
+
+    void alphabetMapping (unordered_map<char, int> &alphaHash) {
+        string alphabet = "abcdefghijklmnopqrstuvwxyz";
+        int counter = 1;
+        for (char c: alphabet) {
+            alphaHash.insert({c, counter});
+            counter++;
+        }
+
+    }
+};
